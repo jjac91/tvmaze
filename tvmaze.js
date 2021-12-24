@@ -115,8 +115,8 @@ function populateEpisodes(episodes){
 }
 
 $("#shows-list").on("click",".get-episodes", async function getEpisodes(e){
-  let ID = $(e.target).closest(".Show").data("show-id")
-  console.log(ID)
-  let episodes = getEpisodes(ID)
+  let showID = $(e.target).closest(".Show").data("show-id")
+  console.log(showID)
+  let episodes = await getEpisodes(showID)
   populateEpisodes(episodes)
 })
