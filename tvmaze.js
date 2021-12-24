@@ -114,7 +114,7 @@ function populateEpisodes(episodes){
   $("#episodes-area").append(list)
 }
 
-$("#shows-list").on("click",".get-episodes", async function getEpisodes(e){
+$("#shows-list").on("click",".get-episodes", async function getEpisodeList(e){
   let showID = $(e.target).closest(".Show").data("show-id")
   console.log(showID)
   let episodes = await getEpisodes(showID)
