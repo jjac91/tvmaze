@@ -21,6 +21,7 @@ let missingImg = "https://tinyurl.com/tv-missing"
 async function searchShows(query) {
 let res = await axios.get("https://api.tvmaze.com/search/shows?",{params: {q:query }})
 let shows = res.data.map(function(result){
+  console.log(result)
   let show =result.show
   return{
     id: show.id,
@@ -89,15 +90,14 @@ async function getEpisodes(id) {
   //       http://api.tvmaze.com/shows/SHOW-ID-HERE/episodes
 
   // TODO: return array-of-episode-info, as described in docstring above
-let res = await axios.get(`http://api.tvmaze.com/search/shows/${id}/episodes`)
-
-let episodes = res.data.map(function(result){
-  let episode =result.episode
+let res = await axios.get(`http://api.tvmaze.com/shows/${id}/episodes`)
+let episodes = res.data.map (function(result){
+  let specificShow  = result
   return{
-    id: episode.id,
-    name : episode.name,
-    season : episode.season,
-    number : episode.number,
+    id: specificShow.id,
+    name : specificShow.name,
+    season : specificShow.season,
+    number : specificShow.number,
   }
 })
 return episodes
@@ -105,13 +105,14 @@ return episodes
 }
 
 function populateEpisodes(episodes){
-  let list = $("ul")
+  let list = $("<ul>")
   for(let episode of episodes){
-    let listItem = $("li",{text:`${episode.name}(${episode.season} : ${episode.number})` } )
+    let listItem = $("<li>",{text:`${episode.name}(${episode.season} : ${episode.number})` } )
+    console.log(listItem)
     list.append(listItem)
   }
-  $("#episodes-area").show()
   $("#episodes-area").append(list)
+  $("#episodes-area").show()
 }
 
 $("#shows-list").on("click",".get-episodes", async function getEpisodeList(e){
